@@ -1,0 +1,67 @@
+@use "../foward" as *;
+.orderby-wrapper{
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.header__orderBy{
+
+  a{
+    text-decoration: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+
+    .header__orderBy__titleFilterIcon, .header__orderBy__dateFilterIcon{
+      vertical-align: middle;
+    }
+
+    .header__orderBy__titleFilterIcon{
+      font-family: serif;
+      color: $primary-text-color;
+      text-decoration: none;
+    }
+
+    .header__orderBy__dateFilterIcon{
+      display: inline-block;
+      background: url(assets/calendar_month_white_24dp.svg) no-repeat center;
+    }
+
+    .header__orderBy__filterTitle{
+      text-decoration: underline;
+    }
+  }
+
+}
+
+.header__orderBy_Layout{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 2em;
+  margin-left: 0.8em;
+
+  p{
+    margin-right: 10px;
+  }
+
+  nav a:first-child{
+    margin-right: 1em;
+  }
+
+  a{
+    padding: 0.3em;
+    
+    .header__orderBy__titleFilterIcon{
+      font-size: 1.5em;
+    }
+
+    .header__orderBy__dateFilterIcon{
+      $dateFilterIcon-size: 1.5em;
+
+      height: $dateFilterIcon-size;
+      width: $dateFilterIcon-size;
+      background-size: $dateFilterIcon-size;
+    }
+  }
+}

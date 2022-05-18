@@ -1,0 +1,107 @@
+@use "sass:map";
+@use "../Settings" as *;
+@use "../Tools" as *;
+
+html {
+  height: 100%;
+  min-height: 100%;
+  font-size: 16px; //in case that browser doesn't support "rem"
+
+  //set the Font-size for each viewport
+  
+  @include breakpoint(mobile, max){
+    font-size: map.get($root-font-size, "small") + px;
+  };
+  
+  @include breakpoint(mobile, min){
+    @include breakpoint(tablet, max){
+    font-size: map.get($root-font-size, "mobile") + px;
+    };
+  };
+
+  @include breakpoint(tablet, min){
+    @include breakpoint(medium, max){
+      font-size: map.get($root-font-size, "tablet") + px;
+    };
+  };
+
+  @include breakpoint(medium, min){
+    @include breakpoint(large, max){
+      font-size: map.get($root-font-size, "medium") + px;
+    };
+  };
+
+  @include breakpoint(large, min){
+    @include breakpoint(x-large, max){
+    font-size: map.get($root-font-size, "large") + px;
+    };
+  };
+  
+  @include breakpoint(x-large, min){
+    font-size: map.get($root-font-size, "x-large") + px;
+  };
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 98%;
+  @include font($main-font, 400);
+  color: $primary-text-color;
+  padding: 0.5em 1em;
+  padding-bottom: 0;
+
+  @include breakpoint(mobile, min){
+    @include breakpoint(tablet, max){
+      padding: 1em 2em;
+      padding-bottom: 0;
+    };
+  };
+
+  @include breakpoint(tablet, min){
+    @include breakpoint(medium, max){
+      padding: 1em 3em;
+      padding-bottom: 0;
+    };
+  };
+
+  @include breakpoint(medium, min){
+    padding: 1em 10vw;
+    padding-bottom: 0;
+  }
+
+  &:after{
+    content: "";
+    display: block;
+    background-attachment: fixed;
+    position: fixed;
+    top: -5px;
+    left: -5px;
+    height: 103%;
+    width: 103%;
+    background-color: #000;
+    opacity: 0.1;
+    z-index: -1;
+  }
+  //fix the Background gradient-color
+  &:before{
+    content: "";
+    display: block;
+    background-attachment: fixed;
+    position: fixed;
+    top: -5px;
+    left: -5px;
+    height: 103%;
+    width: 103%;
+    /* background: radial-gradient(circle at center, #000000 -50%, #141414 100%); */
+    background: url(assets/background.jpg) no-repeat center left;
+    background-size: cover;
+    z-index: -2;
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+  }
+}
+
+.hidden {
+  display: none!important;
+}

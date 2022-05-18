@@ -1,0 +1,35 @@
+//************* Fonts Settings *************//
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+$title-font: 'Marcellus', serif;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+$main-font: 'Poppins', sans-serif;
+
+$root-font-size: (
+  small: 12,
+  mobile: 14,
+  tablet: 16,
+  medium: 18,
+  large: 19,
+  x-large: 20
+); //Just set the NUMBER, not the "px" string (because "rem-calc()" function)
+
+$linear-title-color: linear-gradient(to right, #bfedc0 10%, #90d192 25%, #57d75b 50%, #90d192 75%, #bfedc0 90%);
+$primary-text-color: #FFF;
+$secondary-text-color: #60eca6;
+
+///////////////////////////////////////////////
+
+$background-color: linear-gradient(0deg, rgb(0 0 0) 0%, rgb(24 24 24) 100%);
+$light-color: #FFF;
+$primary-color: #60eca6;
+
+$primary-padding-item: 0.4em;
+
+$breakpoints: (
+  mobile: 380px,
+  tablet: 740px,
+  medium: 960px,
+  large: 1200px,
+  x-large: 1600px
+);

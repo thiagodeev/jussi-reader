@@ -1,0 +1,17 @@
+@use "../Settings" as *;
+@use "../Tools" as *;
+
+.newsList{
+  position: relative;
+  display: grid;
+  gap: 1em;
+  padding-top: 2em;
+
+  @include breakpoint(tablet, min){
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include breakpoint(x-large, min){
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

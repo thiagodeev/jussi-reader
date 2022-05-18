@@ -1,0 +1,13 @@
+//error messagem when empty search or empty favorite items
+.error-container{
+  position: relative;
+  grid-column: span 2;
+  display: flex;
+  justify-content: space-around;
+
+  .error-message{
+    padding-top: 10vh;
+    font-size: 2.5em;
+    text-align: center;
+  }
+}

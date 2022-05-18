@@ -1,0 +1,33 @@
+@use "../foward" as *;
+
+.header__search{
+  border: none;
+
+  > input[type="search"]{
+    border: 1px solid $light-color;
+    border-radius: 30px;
+    display: block;
+    background: url(assets/search.svg) no-repeat 0.7em center;
+    background-size: 1.3em;
+    background-color: $light-color;
+
+    &:focus {
+      box-shadow: 0 0 3px 0 $secondary-text-color;
+      border-color: $secondary-text-color;
+      outline: none;
+    }
+  }
+}
+
+.header__search_Layout{
+  padding: 0;
+
+  > input[type="search"]{
+    width: 20em;
+    padding: 10px 15px 10px 2.5em;
+
+    @include breakpoint(mobile, max){
+      width: 100%;
+    };
+  }
+}

@@ -1,0 +1,118 @@
+@use "../Settings" as *;
+@use "../Tools" as *;
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.newsList__news{
+  display: grid;
+  cursor: pointer;
+  padding: 0.7em;
+  border-radius: 1em;
+  box-shadow: 0px 0px 5px 3px rgb(0 0 0 / 20%);
+  backdrop-filter: blur(20px);
+  background-color: rgb(255 255 255 / 10%);
+  column-gap: 1em;
+  transition: transform 0.1s linear;
+  animation: fadeIn 0.3s linear;
+
+  grid-template:
+      "image title title"
+      "image date date"
+      "excerpt excerpt excerpt"
+      ". categories categories"/ 1fr 1fr 1fr;
+
+  &:hover{
+    -webkit-transform: scale(1.024);
+    -ms-transform: scale(1.024);
+    transform: scale(1.024);
+  }
+  @include breakpoint(mobile, min){
+    @include breakpoint(tablet, max){
+      grid-template:
+      "image title title title"
+      "image date date date"
+      "image excerpt excerpt excerpt"
+      "image categories categories ."/ 1fr 1fr 1fr 1fr;
+    };
+  };
+
+  @include breakpoint(large, min){
+    @include breakpoint(x-large, max){
+      grid-template:
+      "image title title title"
+      "image date date date"
+      "image excerpt excerpt excerpt"
+      "image categories categories ."/ 1fr 1fr 1fr 1fr;
+    }
+  };
+
+  &__favorite{
+    position: absolute;
+    height: 0.9em;
+    width: 1em;
+    padding: 0.8em;
+    left: 0.3em;
+    top: 0.3em;
+    background-color: rgb(255 255 255 / 40%);
+    border-radius: 100%;
+    text-align: center;
+    fill: $primary-color;
+  }
+
+  &__image{
+    object-fit: cover;
+    height: 5em;
+    width: 5em;
+    grid-area: image;
+
+    @include breakpoint(mobile, min){
+      @include breakpoint(tablet, max){
+        height: 6em;
+        width: 7em;
+        align-self: center;
+        justify-self: center;
+      };
+    };
+
+    @include breakpoint(tablet, min){
+      height: 8em;
+      width: 8em;
+      align-self: center;
+      justify-self: center;
+    };
+  }
+  
+  &__title{
+    grid-area: title;
+
+    font-size: 1.2em;
+    margin: 0;
+  }
+
+  &__date_published{
+    grid-area: date;
+
+    margin: 0.5em 0 0 0;
+    font-size: 0.8em;
+  }
+
+  &__excerpt{
+    grid-area: excerpt;
+
+    margin: 0.5em 0;
+  }
+
+  &__categories{
+    grid-area: categories;
+    display: flex;
+    justify-content: space-around;
+
+    > span {
+      color: $secondary-text-color;
+      margin-right: 1em;
+    }
+  }
+}
