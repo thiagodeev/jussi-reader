@@ -573,6 +573,7 @@ body:before {
   }
 }
 .newsList__news {
+  position: relative;
   display: grid;
   cursor: pointer;
   padding: 0.7em;
@@ -588,6 +589,11 @@ body:before {
   -webkit-transform: scale(1.024);
   -ms-transform: scale(1.024);
   transform: scale(1.024);
+}
+@media (min-width: 740px) {
+  .newsList__news {
+    backdrop-filter: blur(10px);
+  }
 }
 @media (min-width: 380px) and (max-width: 739px) {
   .newsList__news {
