@@ -97,8 +97,8 @@ body {
     background: url(assets/background.jpg) no-repeat center left;
     background-size: cover;
     z-index: -2;
-    // filter: blur(2px);
-    // -webkit-filter: blur(2px);
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
   }
 }
 
