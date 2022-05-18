@@ -1,3 +1,8 @@
+loadingAnimation = function loadingAnimation(){
+  document.getElementById("body-wrapper").classList.toggle("visibility-off");
+  document.getElementById("loading").classList.toggle("visibility-on");
+};
+
 async function main (){
   numberOfNewsPerPage = 6;
 
@@ -33,11 +38,23 @@ async function main (){
   //save the news list offline
   localStorage.setItem('newsFromAPI', JSON.stringify(newsFromAPI));
 };
+main();
 
 //just executes when DOM is loaded
 document.addEventListener("DOMContentLoaded", function(event) {
-  main();
 });
+
+
+
+
+window.addEventListener('load', (event) => {
+  loadingAnimation()
+});
+
+
+
+
+
 
 
 // for( let i = 0; i < 2000000000; i++)

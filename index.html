@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="main.css">
 
     <!-- for development -->
-    <script type="text/javascript" src="js/api.js"></script>
+    <!-- <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/renderFunctions.js"></script>
     <script type="text/javascript" src="js/localStorage.js"></script>
     <script type="text/javascript" src="js/generalFunctions.js"></script>
@@ -19,96 +19,99 @@
     <script type="text/javascript" src="js/categories.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
     <script type="text/javascript" src="js/favorites.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
-
-    <!-- <script type="text/javascript" src="main.js"></script> -->
+    <script type="text/javascript" src="js/script.js"></script> -->
+    <!-- -------------- -->
   </head>
 
   <body>
-
-    <div id="loading" class="loading">
-      <div class="lds-default">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+    <div id="loading" class="loading visibility-on">
+      <div class="loading-wrapper">
+        <div class="lds-default">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <p>Carregando</p>
       </div>
     </div>
     
-    <header class="header header_Layout">
-      <div class="container-1">
-        <div>
-          <h1 id="title" class="header__title header__title_Layout"">
-            <img src="assets/logo-jussi-white.svg" alt="jussi-logo"><span>Reader</span>
-          </h1>
+    <div id="body-wrapper" class="body-wrapper visibility-off">
+      <header class="header header_Layout">
+        <div class="container-1">
+          <div>
+            <h1 id="title" class="header__title header__title_Layout"">
+              <img src="assets/logo-jussi-white.svg" alt="jussi-logo"><span>Reader</span>
+            </h1>
+          </div>
+          <div>
+            <form class="header__search header__search_Layout">
+              <input type="search" name="" id="searchbar" placeholder="Pesquisar...">
+            </form>
+          </div>
         </div>
-        <div>
-          <form class="header__search header__search_Layout">
-            <input type="search" name="" id="searchbar" placeholder="Pesquisar...">
-          </form>
-        </div>
-      </div>
-      
-      <div class="container-2">
-        <div class="container-categories">
-          <nav class="header__categories">
-            <ul id="categories-list" class="categories-list"></ul>
-          </nav>
-          <button id="show-all-categories" class="show-all-categories">Ver mais</button>
-          <div id="categories-wrapper" class="categories-wrapper">
-            <ul id="categories-list-2" class="categories-list-2"></ul>
+        
+        <div class="container-2">
+          <div class="container-categories">
+            <nav class="header__categories">
+              <ul id="categories-list" class="categories-list"></ul>
+            </nav>
+            <button id="show-all-categories" class="show-all-categories">Ver mais</button>
+            <div id="categories-wrapper" class="categories-wrapper">
+              <ul id="categories-list-2" class="categories-list-2"></ul>
+            </div>
+            <hr class="orderBy-divider">
+          </div>
+          <div class="container-orderByAndFavorites">
+            <div class="header__favorites">
+              <a id="favorites" href="#">
+                <svg viewBox="0 0 36 32">
+                  <path d='M0 10.4q0-1.7.8-4t2.6-3.8Q5 1.2 6.7.6t3.6-.6q2 0 3.8.8t4 2.7q2-2 4-2.7t4-.8 3.4.6 3.3 2Q34.3 4 35 6.3t1 4-.6 4-3 4L18 32 3.4 18.2Q1.8 16.7 1 14.7t-1-4.3z'></path>
+                </svg>
+                <span>Favoritos</span>
+              </a>
+            </div>
+            <div class="header__orderBy header__orderBy_Layout">
+              <p>Ordenar por:</p>
+              <nav class="orderby-wrapper">
+                <a id="orderByTitle" href="#">
+                  <span class="header__orderBy__titleFilterIcon">A</span>
+                  <span class="header__orderBy__filterTitle">título</span>
+                </a>
+                <a id="orderByDate" href="#">
+                  <span class="header__orderBy__dateFilterIcon"></span>
+                  <span class="header__orderBy__filterTitle">data</span>
+                </a>
+              </nav>
+            </div>
           </div>
           <hr class="orderBy-divider">
         </div>
-        <div class="container-orderByAndFavorites">
-          <div class="header__favorites">
-            <a id="favorites" href="#">
-              <svg viewBox="0 0 36 32">
-                <path d='M0 10.4q0-1.7.8-4t2.6-3.8Q5 1.2 6.7.6t3.6-.6q2 0 3.8.8t4 2.7q2-2 4-2.7t4-.8 3.4.6 3.3 2Q34.3 4 35 6.3t1 4-.6 4-3 4L18 32 3.4 18.2Q1.8 16.7 1 14.7t-1-4.3z'></path>
-              </svg>
-              <span>Favoritos</span>
-            </a>
-          </div>
-          <div class="header__orderBy header__orderBy_Layout">
-            <p>Ordenar por:</p>
-            <nav class="orderby-wrapper">
-              <a id="orderByTitle" href="#">
-                <span class="header__orderBy__titleFilterIcon">A</span>
-                <span class="header__orderBy__filterTitle">título</span>
-              </a>
-              <a id="orderByDate" href="#">
-                <span class="header__orderBy__dateFilterIcon"></span>
-                <span class="header__orderBy__filterTitle">data</span>
-              </a>
-            </nav>
-          </div>
-        </div>
-        <hr class="orderBy-divider">
-      </div>
-      <hr class="large-screen-divider">
-    </header>
-    
-    
-    <main>
-      <div id="newsList" class="newsList"></div>
-    </main>
-
-    <footer>
-      <nav id="pagination" class="pagination"></nav>
-      <form class="api-form">
-        <button id="submit-api-button">Enviar</button>
-        <input type="text" name="api-link" id="input-api-link" placeholder="Insira aqui uma nova API de notícias">
-      </form>
-    </footer>
+        <hr class="large-screen-divider">
+      </header>
+      
+      <main>
+        <div id="newsList" class="newsList"></div>
+      </main>
+  
+      <footer>
+        <nav id="pagination" class="pagination"></nav>
+        <form class="api-form">
+          <button id="submit-api-button">Enviar</button>
+          <input type="text" name="api-link" id="input-api-link" placeholder="Insira aqui uma nova API de notícias">
+        </form>
+      </footer>
+    </div>
   </body>
+
   <script>
     //all this is just for move the 'categories-wrapper' element, por aesthetics reasons
 
@@ -132,4 +135,5 @@
       };
     };
   </script>
+  <script type="text/javascript" src="main.js"></script>
 </html>

@@ -1,11 +1,6 @@
 @use "../Settings" as *;
 @use "../Tools" as *;
 
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-
 .newsList__news{
   position: relative;
   display: grid;

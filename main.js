@@ -25,14 +25,38 @@ async function fetchAPI (urlList){
   return newsList;
 };
 
-
+function addNewAPI(){
+  let input = document.getElementById("input-api-link");
+  let button = document.getElementById("submit-api-button");
+  let APILink = "";
+  
+  button.addEventListener("click", async element => {
+    element.preventDefault();
+    
+    APILink = input.value;
+    newsURLs.push(APILink);
+    
+    const newsFromAPI = await fetchAPI(newsURLs);
+    //update the offline news list
+    localStorage.setItem('newsFromAPI', JSON.stringify(newsFromAPI));
+    main();
+    //clean input
+    input.value = "";
+  }, {once : true});
+};
+loadingAnimation = function loadingAnimation(){
+  document.getElementById("body-wrapper").classList.toggle("visibility-off");
+  document.getElementById("loading").classList.toggle("visibility-on");
+};
 
 async function main (){
   numberOfNewsPerPage = 6;
 
-  const newsFromAPI = await fetchAPI(newsURLs);
-  const allAPINews = getAllNewsOf(newsFromAPI);
-  allNewsInHTMLFormat = createsHTMLNewsFrom(allAPINews);
+  newsFromAPI = await getAPINews();
+  const allAPINewsInOneList = getAllNewsOf(newsFromAPI);
+  allNewsInHTMLFormat = createsHTMLNewsFrom(allAPINewsInOneList);
+
+  offlineFavoritesFeature(allNewsInHTMLFormat);
 
   renderNews = function (arrayToRender){
     const organizedNews = divideTheArray(arrayToRender, numberOfNewsPerPage);
@@ -53,32 +77,90 @@ async function main (){
   titleLink(allNewsInHTMLFormat);
   //add functionality to input API
   addNewAPI();
+
   //scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  //save the news list offline
+  localStorage.setItem('newsFromAPI', JSON.stringify(newsFromAPI));
 };
 main();
 
+//just executes when DOM is loaded
+document.addEventListener("DOMContentLoaded", function(event) {
+});
+
+
+
+
+window.addEventListener('load', (event) => {
+  loadingAnimation()
+});
+
+
+
+
+
+
+
+// for( let i = 0; i < 2000000000; i++)
+// {}
+
+
 // window.addEventListener('load', (event) => {
-//   addNewAPI()
+//   for( let i = 0; i < 2000000000; i++)
+// {}
 //   console.log("load");
 // });
 
 // document.addEventListener('readystatechange', (event) => {
+//   console.log("readystate" + document.readyState);
 //   for( let i = 0; i < 2000000000; i++)
 // {}
-// console.log("readystate" + document.readyState);
+//   console.log("readystate" + document.readyState);
 // });
 
 // document.addEventListener('DOMContentLoaded', (event) => {
-//   for( let i = 0; i < 2000000000; i++)
-// {}
-// console.log("DOMContentLoaded");
+//   console.log("DOMContentLoaded");
 // });
 
+async function getAPINews(){
+  let newsOffline = JSON.parse(localStorage.getItem('newsFromAPI'));
+
+  if(newsOffline === null){
+    const newsFromAPI = await fetchAPI(newsURLs);
+
+    //save the news offline
+    localStorage.setItem('newsFromAPI', JSON.stringify(newsFromAPI));
+
+    return newsFromAPI;
+  } else {
+    const newsFromAPI = newsOffline;
+    return newsFromAPI;
+  }
+};
 function deleteChildElements(element){
   //Faster to remove content than .innerHTML=""
   while (element.firstChild) {element.removeChild(element.lastChild);};
 };
+
+function removeActiveClassFromFavoriteMenu(){
+  let favoriteItem = document.getElementById("favorites");
+
+  favoriteItem.classList.remove("active");
+}
+
+function removeActiveClassFromCategoriesItems(){
+  let categoriesListElement = document.getElementById("categories-list");
+  let categoriesListElement_2 = document.getElementById("categories-list-2");
+  
+  for (let i=0; i < categoriesListElement.children.length; i++){
+    categoriesListElement.children[i].classList.remove('active');
+  }
+  for (let i=0; i < categoriesListElement_2.children.length; i++){
+    categoriesListElement_2.children[i].classList.remove('active');
+  };
+}
 
 function titleLink(organizedNews){
   document.getElementById("title").onclick= function(){
@@ -86,35 +168,10 @@ function titleLink(organizedNews){
     addOrderBy(organizedNews);
     addSearch(organizedNews);
     
-    //remove Active class from categories
-    let categoriesListElement = document.getElementById("categories-list");
-    let categoriesListElement_2 = document.getElementById("categories-list-2");
-    
-    for (let i=0; i < categoriesListElement.children.length; i++){
-      categoriesListElement.children[i].classList.remove('active');
-    }
-    for (let i=0; i < categoriesListElement_2.children.length; i++){
-      categoriesListElement_2.children[i].classList.remove('active');
-    }
-  }
-}
-
-function addNewAPI(){
-  let input = document.getElementById("input-api-link");
-  let button = document.getElementById("submit-api-button");
-  let APILink = "";
-  
-  button.addEventListener("click", element => {
-    element.preventDefault();
-    
-
-    APILink = input.value;
-    console.log(input.value);
-    newsURLs.push(APILink);
-    console.log(newsURLs);
-    main();
-  }, {once : true});
-}
+    removeActiveClassFromCategoriesItems();
+    removeActiveClassFromFavoriteMenu();
+  };
+};
 function getAllNewsOf (newsFromAPI) {
   let allNews = [];
 
@@ -160,7 +217,7 @@ function makeFavoriteElement(){
       theSVGElement.innerHTML = clickedPath;
     } else {
       theSVGElement.innerHTML = defaultPath;
-    }
+    };
   });
 
   return favoriteElement;
@@ -237,8 +294,6 @@ function newsTemplate(newsList){
   `;
   element.prepend(favoriteElement);
   element.append(divCategoriesList);
-
-  // <span class="newsList__news__favorite"><svg viewBox="0 0 36 32"><path d="M30.4 16q1.5-1.3 2-2.6t.6-3q0-1.4-.7-3T30.6 5q-1.4-1.2-2.4-1.6T25.8 3q-1.5 0-3 .6t-2.6 2l-2 2-2.3-2q-1.8-1.4-3-2T10.2 3t-2.6.4T5.3 5q-1 .7-1.6 2.4t-.7 3q0 1.4.6 3T5.4 16L18 28l12.4-12zM0 10.5q0-1.7.8-4t2.6-3.8Q5 1.2 6.7.7t3.6-.7q2 0 3.8.8t4 2.7q2-2 4-2.7t4-.8 3.4.6 3.3 2Q34.3 4 35 6.3t1 4-.6 4-3 4L18 32 3.4 18.2Q1 16 .4 13.7T0 10.4z"></path></svg></span> 
   
   element.addEventListener("click", element => {
     if((element.target.localName != "span") && (element.target.localName != "svg") && (element.target.localName != "path")){
@@ -250,10 +305,14 @@ function newsTemplate(newsList){
 };
 
 function renderNewsOnHTML(organizedNews, currentPage = 0){
-  deleteChildElements(document.getElementById("newsList"));
+  let newsListDiv = document.getElementById("newsList");
+
+  if(newsListDiv.childElementCount > 0){
+    deleteChildElements(newsListDiv);
+  }
 
   organizedNews[currentPage].forEach(news => {
-    document.getElementById("newsList").append(news);
+    newsListDiv.append(news);
   });
 };
 
@@ -356,13 +415,8 @@ function renderCategorieList(categoriesObject){
       if(!element.currentTarget.classList.contains("active")){
         // console.log(categorieElements)
 
-        //removes the class Active from all categories items 
-        for (let i=0; i < categoriesListElement.children.length; i++){
-          categoriesListElement.children[i].classList.remove('active');
-        }
-        for (let i=0; i < categoriesListElement_2.children.length; i++){
-          categoriesListElement_2.children[i].classList.remove('active');
-        }
+        removeActiveClassFromCategoriesItems();
+        removeActiveClassFromFavoriteMenu();
         
         //write the page on HTML
         renderNews(value);
@@ -380,10 +434,14 @@ function renderCategorieList(categoriesObject){
       categoriesListElement_2.append(categorieItem);
     }
   });
+
+  let categoriesLabel = document.createElement("p");
+  categoriesLabel.innerText = "Categorias:";
+  categoriesListElement.prepend(categoriesLabel);
 };
 
 //////////// see all categories //////////////
-isTheSeeAllCategoriesEventAddedForTheFirstTime = false;
+isTheSeeAllCategoriesEventAddedForTheFirstTime = true;
 
 function seeAllCategories(){
   let toggleButton = document.getElementById("show-all-categories");
@@ -393,13 +451,13 @@ function seeAllCategories(){
   categoriesWrapper.classList.remove("show-list");
 
   //checks if the event has not been added yet
-  if (!isTheSeeAllCategoriesEventAddedForTheFirstTime){
+  if (isTheSeeAllCategoriesEventAddedForTheFirstTime){
     //trick to access this value inside event function
     toggleButton.categoriesWrapper = categoriesWrapper;
 
     toggleButton.addEventListener("click", seeAllCategoriesEvent);
 
-    isTheSeeAllCategoriesEventAddedForTheFirstTime = true;
+    isTheSeeAllCategoriesEventAddedForTheFirstTime = false;
   }
 };
 
@@ -412,14 +470,16 @@ function seeAllCategoriesEvent(toggleButton){
     toggleButton.target.innerText = "Ver mais";
   }
 };
-isTheDataEventAddedForTheFirstTime = false;
-isTheTitleEventAddedForTheFirstTime = false;
+isTheDataEventAddedForTheFirstTime = true;
+isTheTitleEventAddedForTheFirstTime = true;
 
 function dataEvent(element){
   document.getElementById("orderByTitle").removeAttribute('class');
 
   if(!element.currentTarget.classList.contains("active")){
-    renderNews(element.currentTarget.elementToRender);
+    if(element.currentTarget.elementToRender.length > 0){
+      renderNews(element.currentTarget.elementToRender);
+    }
     
     element.currentTarget.classList.add("active");
   };
@@ -429,7 +489,9 @@ function titleEvent(element){
   document.getElementById("orderByDate").removeAttribute('class');
 
   if(!element.currentTarget.classList.contains("active")){
-    renderNews(element.currentTarget.elementToRender);
+    if(element.currentTarget.elementToRender.length > 0){
+      renderNews(element.currentTarget.elementToRender);
+    }
     
     element.currentTarget.classList.add("active");
   };
@@ -453,20 +515,20 @@ function renderHTMLListOrderedByTitle(elementToRender){
 
   orderByTitleElement.elementToRender = elementToRender;
 
-  if(isTheTitleEventAddedForTheFirstTime){
+  if(!isTheTitleEventAddedForTheFirstTime){
     orderByTitleElement.removeEventListener('click', titleEvent, true);
   }
 
   orderByTitleElement.addEventListener("click", titleEvent, true);
 
-  isTheTitleEventAddedForTheFirstTime = true;
+  isTheTitleEventAddedForTheFirstTime = false;
 };
 
 //********** date **********//
 function orderByDate(newsList){
   let ordenedList = Array.from(newsList).sort((a, b) => {
-    let x = a.getElementsByClassName("newsList__news__date_published")[0].innerText
-    let y = b.getElementsByClassName("newsList__news__date_published")[0].innerText
+    let x = a.getElementsByClassName("newsList__news__date_published")[0].innerText;
+    let y = b.getElementsByClassName("newsList__news__date_published")[0].innerText;
 
     return x > y ? -1 : 1;
   });
@@ -480,12 +542,12 @@ function renderHTMLListOrderedByDate(elementToRender){
 
   orderByDateElement.elementToRender = elementToRender;
 
-  if(isTheDataEventAddedForTheFirstTime){
+  if(!isTheDataEventAddedForTheFirstTime){
     orderByDateElement.removeEventListener('click', dataEvent, true);
   }
   orderByDateElement.addEventListener("click", dataEvent, true);
 
-  isTheDataEventAddedForTheFirstTime = true;
+  isTheDataEventAddedForTheFirstTime = false;
 };
 
 //********** title and date **********//
@@ -498,45 +560,91 @@ function addOrderBy(elementToRender){
 }
 function favorites(allNewsInHTMLFormat){
   let favoriteItem = document.getElementById("favorites");
-  let favoritesNewsList = [];
-  let favoriteNews;
 
   favoriteItem.addEventListener("click", element => {
-    favoritesNewsList = [];
-    allNewsInHTMLFormat.forEach(news => {
-      if(news.children[0].classList.contains("favorite")){
-        favoritesNewsList.push(news);
+    removeActiveClassFromCategoriesItems();
+
+    if(!element.currentTarget.classList.contains("active")){
+      let favoritesNewsList = [];
+      allNewsInHTMLFormat.forEach(news => {
+        if(news.children[0].classList.contains("favorite")){
+          favoritesNewsList.push(news);
+        }
+      });
+
+      if(favoritesNewsList.length > 0){
+        renderNews(favoritesNewsList);
+        addOrderBy(favoritesNewsList);
+        addSearch(favoritesNewsList);
+      } else {
+        addOrderBy(favoritesNewsList);
+        addSearch(favoritesNewsList);
+        document.getElementById("newsList").innerHTML = "<div class='error-container'><h2 class='error-message'>Você ainda não adicionou nenhum favorito</h2></div>";
+        document.getElementById("pagination").innerHTML = "";
       }
-    });
 
-    renderNews(favoritesNewsList);
-    addOrderBy(favoritesNewsList);
-    addSearch(favoritesNewsList);
-
-    console.log(favoritesNewsList)
-  });
-}
-isTheSearchEventAddedForTheFirstTime = false;
-
-function searchEvent(input){
-  input.target.searchResult = [];
-  //get input value and remove white spaces
-  let valueOfInput = input.target.value.replace(/\s+/g, '').toUpperCase();
-
-  input.target.allNewsInHTMLFormat.forEach(element => {
-    //get title value and remove white spaces
-    let newsTitle = element.getElementsByClassName("newsList__news__title")[0].innerText.replace(/\s+/g, '').toUpperCase();
-    
-    if (newsTitle.indexOf(valueOfInput) > -1){
-      input.target.searchResult.push(element);
+      element.currentTarget.classList.add("active");
     };
   });
-  if(input.target.searchResult.length > 0){
-    renderNews(input.target.searchResult);
-    addOrderBy(input.target.searchResult);
-  } else {
-    document.getElementById("newsList").innerHTML = "<h2 class='search-error'>Nenhum resultado encontrado :/</h2>";
-    document.getElementById("pagination").innerHTML = "";
+};
+
+function offlineFavoritesFeature(allNewsInHTMLFormat){
+  let indexesOfFavoritesNews = [];
+
+  //checks if exist an offline favorites list
+  if(!(JSON.parse(localStorage.getItem('indexesOfFavoritesNews')) === null)){
+    indexesOfFavoritesNews = JSON.parse(localStorage.getItem('indexesOfFavoritesNews'));
+  };
+
+  for(let index = 0; index < allNewsInHTMLFormat.length; index++){
+    let currentNews = allNewsInHTMLFormat[index];
+
+    //verify if news was favorited in the last session
+    if(indexesOfFavoritesNews.includes(index)){
+      currentNews.firstChild.classList.add("favorite");
+
+      //change favorite Icon to looking like was clicked
+      currentNews.firstChild.firstChild.innerHTML = "<path d='M0 10.4q0-1.7.8-4t2.6-3.8Q5 1.2 6.7.6t3.6-.6q2 0 3.8.8t4 2.7q2-2 4-2.7t4-.8 3.4.6 3.3 2Q34.3 4 35 6.3t1 4-.6 4-3 4L18 32 3.4 18.2Q1.8 16.7 1 14.7t-1-4.3z'></path>";
+    }
+    
+    currentNews.firstChild.addEventListener("click", element => {
+      let newsIndex = allNewsInHTMLFormat.indexOf(element.currentTarget.parentElement);
+
+      if(element.currentTarget.classList.contains("favorite")){
+        indexesOfFavoritesNews.push(newsIndex);
+        console.log(indexesOfFavoritesNews);
+      } else {
+        indexesOfFavoritesNews.splice(indexesOfFavoritesNews.indexOf(newsIndex), 1);
+        console.log(indexesOfFavoritesNews);
+      }
+
+      localStorage.setItem('indexesOfFavoritesNews', JSON.stringify(indexesOfFavoritesNews));
+    });
+  };
+};
+isTheSearchEventAddedForTheFirstTime = true;
+
+function searchEvent(input){
+  if(input.currentTarget.allNewsInHTMLFormat.length > 0){
+    input.currentTarget.searchResult = [];
+    //get input value and remove white spaces
+    let valueOfInput = input.currentTarget.value.replace(/\s+/g, '').toUpperCase();
+  
+    input.currentTarget.allNewsInHTMLFormat.forEach(element => {
+      //get title value and remove white spaces
+      let newsTitle = element.getElementsByClassName("newsList__news__title")[0].innerText.replace(/\s+/g, '').toUpperCase();
+      
+      if (newsTitle.indexOf(valueOfInput) > -1){
+        input.currentTarget.searchResult.push(element);
+      };
+    });
+    if(input.currentTarget.searchResult.length > 0){
+      renderNews(input.currentTarget.searchResult);
+      addOrderBy(input.currentTarget.searchResult);
+    } else {
+      document.getElementById("newsList").innerHTML = "<div class='error-container'><h2 class='error-message'>Nenhum resultado encontrado :/</div></h2>";
+      document.getElementById("pagination").innerHTML = "";
+    }
   }
 }
 
@@ -547,11 +655,11 @@ function addSearch(allNewsInHTMLFormat){
   input.allNewsInHTMLFormat = allNewsInHTMLFormat;
   input.searchResult = searchResult;
   
-  if(isTheSearchEventAddedForTheFirstTime){
+  if(!isTheSearchEventAddedForTheFirstTime){
     input.removeEventListener('input', searchEvent, true);
   }
 
   input.addEventListener("input", searchEvent, true);
 
-  isTheSearchEventAddedForTheFirstTime = true;
+  isTheSearchEventAddedForTheFirstTime = false;
 };
