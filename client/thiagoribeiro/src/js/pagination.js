@@ -29,7 +29,7 @@
           element.currentTarget.classList.add("active");
         }
       });
-      paginationElement.appendChild(paginationItem);
+      paginationElement.append(paginationItem);
     }
     paginationElement.firstChild.classList.add("active")
   }

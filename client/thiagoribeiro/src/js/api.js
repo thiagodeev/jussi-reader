@@ -1,4 +1,4 @@
-const newsURLs = [
+newsURLs = [
   "https://jussi-reader.netlify.app/.netlify/functions/news-one",
   "https://jussi-reader.netlify.app/.netlify/functions/news-two",
 ];
@@ -25,4 +25,22 @@ async function fetchAPI (urlList){
   return newsList;
 };
 
-
+function addNewAPI(){
+  let input = document.getElementById("input-api-link");
+  let button = document.getElementById("submit-api-button");
+  let APILink = "";
+  
+  button.addEventListener("click", async element => {
+    element.preventDefault();
+    
+    APILink = input.value;
+    newsURLs.push(APILink);
+    
+    const newsFromAPI = await fetchAPI(newsURLs);
+    //update the offline news list
+    localStorage.setItem('newsFromAPI', JSON.stringify(newsFromAPI));
+    main();
+    //clean input
+    input.value = "";
+  }, {once : true});
+};

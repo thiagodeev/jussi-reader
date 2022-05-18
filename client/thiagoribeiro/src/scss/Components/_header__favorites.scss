@@ -1,0 +1,21 @@
+@use "../foward" as *;
+
+.header__favorites{
+  > a{
+    padding: 0.5em;
+    display: flex;
+    align-items: center;
+
+    > svg{
+      width: 1em;
+  
+      > path{
+        fill: #60eca6;
+      }
+    }
+
+    span{
+      margin-left: 0.3em;
+    }
+  }
+}

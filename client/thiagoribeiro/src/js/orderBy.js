@@ -1,11 +1,13 @@
-isTheDataEventAddedForTheFirstTime = false;
-isTheTitleEventAddedForTheFirstTime = false;
+isTheDataEventAddedForTheFirstTime = true;
+isTheTitleEventAddedForTheFirstTime = true;
 
 function dataEvent(element){
   document.getElementById("orderByTitle").removeAttribute('class');
 
   if(!element.currentTarget.classList.contains("active")){
-    renderNews(element.currentTarget.elementToRender);
+    if(element.currentTarget.elementToRender.length > 0){
+      renderNews(element.currentTarget.elementToRender);
+    }
     
     element.currentTarget.classList.add("active");
   };
@@ -15,7 +17,9 @@ function titleEvent(element){
   document.getElementById("orderByDate").removeAttribute('class');
 
   if(!element.currentTarget.classList.contains("active")){
-    renderNews(element.currentTarget.elementToRender);
+    if(element.currentTarget.elementToRender.length > 0){
+      renderNews(element.currentTarget.elementToRender);
+    }
     
     element.currentTarget.classList.add("active");
   };
@@ -39,20 +43,20 @@ function renderHTMLListOrderedByTitle(elementToRender){
 
   orderByTitleElement.elementToRender = elementToRender;
 
-  if(isTheDataEventAddedForTheFirstTime){
+  if(!isTheTitleEventAddedForTheFirstTime){
     orderByTitleElement.removeEventListener('click', titleEvent, true);
   }
 
   orderByTitleElement.addEventListener("click", titleEvent, true);
 
-  isTheTitleEventAddedForTheFirstTime = true;
+  isTheTitleEventAddedForTheFirstTime = false;
 };
 
 //********** date **********//
 function orderByDate(newsList){
   let ordenedList = Array.from(newsList).sort((a, b) => {
-    let x = a.getElementsByClassName("newsList__news__date_published")[0].innerText
-    let y = b.getElementsByClassName("newsList__news__date_published")[0].innerText
+    let x = a.getElementsByClassName("newsList__news__date_published")[0].innerText;
+    let y = b.getElementsByClassName("newsList__news__date_published")[0].innerText;
 
     return x > y ? -1 : 1;
   });
@@ -66,12 +70,12 @@ function renderHTMLListOrderedByDate(elementToRender){
 
   orderByDateElement.elementToRender = elementToRender;
 
-  if(isTheDataEventAddedForTheFirstTime){
+  if(!isTheDataEventAddedForTheFirstTime){
     orderByDateElement.removeEventListener('click', dataEvent, true);
   }
   orderByDateElement.addEventListener("click", dataEvent, true);
 
-  isTheDataEventAddedForTheFirstTime = true;
+  isTheDataEventAddedForTheFirstTime = false;
 };
 
 //********** title and date **********//

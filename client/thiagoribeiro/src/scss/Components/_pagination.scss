@@ -1,4 +1,5 @@
 @use "../foward" as *;
+
 footer {
   margin-top: auto;
   padding-top: 4em;
@@ -33,6 +34,9 @@ footer {
       }
       &:last-child{
         border-radius: 0px $border-radius $border-radius 0px;
+      }
+      &:only-child{
+        border-radius: $border-radius;
       }
   
       &.active{

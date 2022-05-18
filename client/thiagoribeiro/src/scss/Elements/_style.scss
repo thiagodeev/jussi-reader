@@ -100,9 +100,8 @@ body {
     filter: blur(2px);
     -webkit-filter: blur(2px);
   }
-  
-  a.active, li.active {
-    color: #32ff00;
-    font-size: 1.2em;
-  }
+}
+
+.hidden {
+  display: none!important;
 }

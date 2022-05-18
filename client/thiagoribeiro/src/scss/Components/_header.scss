@@ -2,33 +2,75 @@
 
 .header {
   display: flex;
+  transition: display 0.1s linear;
   flex-direction: column;
-  align-items: center;
 
-  .container{
+  [class^="container"]{
     display: flex;
     justify-content: space-around;
     flex-direction: column;
-
-    &:first-child{
-      align-items: center;
-    }
 
     @include breakpoint(tablet, min){
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
 
-      &:nth-child(2) .orderBy-divider{
+      .orderBy-divider{
         display: none;
       }
     };
-
   }
 
+  .container-1{
+    align-items: center;
+  }
+  .container-2{
+    @include breakpoint(tablet, min){
+      align-items: start;
+    }
+  }
+
+  .container-orderByAndFavorites{
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+
+    @include breakpoint(tablet, min){
+      justify-content: flex-end;
+    }
+  }
+
+  .container-categories{
+    @include breakpoint(tablet, min){
+      flex-direction: column;
+    }
+  }
+
+  //active items and hover style
+  li.flex-item.active{
+    a{
+      background-color: rgb(96 236 166 / 20%);
+      border-radius: 0.5em;
+    }
+  }
   a{
     color: $secondary-text-color;
+
+    &.active{
+      background-color: rgb(96 236 166 / 20%);
+      border-radius: 0.5em;
+
+      &:hover{
+        background-color: rgb(96 236 166 / 20%);
+        border-radius: 0.5em;
+      }
+    }
+    &:hover{
+      background-color: rgb(255 255 255 / 20%);
+      border-radius: 0.5em;
+    }
   }
+  /////////
 }
 
 .header_Layout{

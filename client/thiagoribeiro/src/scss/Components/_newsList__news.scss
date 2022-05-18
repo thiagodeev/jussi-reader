@@ -1,6 +1,11 @@
 @use "../Settings" as *;
 @use "../Tools" as *;
 
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
 .newsList__news{
   display: grid;
   cursor: pointer;
@@ -10,7 +15,8 @@
   backdrop-filter: blur(20px);
   background-color: rgb(255 255 255 / 10%);
   column-gap: 1em;
-
+  transition: transform 0.1s linear;
+  animation: fadeIn 0.3s linear;
 
   grid-template:
       "image title title"
@@ -18,6 +24,11 @@
       "excerpt excerpt excerpt"
       ". categories categories"/ 1fr 1fr 1fr;
 
+  &:hover{
+    -webkit-transform: scale(1.024);
+    -ms-transform: scale(1.024);
+    transform: scale(1.024);
+  }
   @include breakpoint(mobile, min){
     @include breakpoint(tablet, max){
       grid-template:
@@ -37,6 +48,19 @@
       "image categories categories ."/ 1fr 1fr 1fr 1fr;
     }
   };
+
+  &__favorite{
+    position: absolute;
+    height: 0.9em;
+    width: 1em;
+    padding: 0.8em;
+    left: 0.3em;
+    top: 0.3em;
+    background-color: rgb(255 255 255 / 40%);
+    border-radius: 100%;
+    text-align: center;
+    fill: $primary-color;
+  }
 
   &__image{
     object-fit: cover;
