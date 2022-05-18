@@ -52,9 +52,19 @@
 
 .categories-wrapper{
   background: $background-color;
-  display: none;
+  max-height: 0;
+  transition: max-height 0.5s ease;
 
   &.show-list{
-    display: block;
+    max-height: 100px;
+  
+    .categories-list-2 {
+      opacity: 1;
+    }
+  }
+
+  .categories-list-2 {
+    opacity: 0;
+    transition: opacity 0.5s ease;
   }
 }
