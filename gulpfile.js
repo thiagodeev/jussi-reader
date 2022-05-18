@@ -10,30 +10,30 @@ gulp.task("js", compileJS);
 
 function compileSass(){
     return gulp
-    .src("src/scss/**/main.scss")
+    .src("scss/**/main.scss")
     .pipe(sass())
-    .pipe(gulp.dest("src/"));
+    .pipe(gulp.dest("./"));
 };
 
 function compileJS(){
     return gulp
     .src([
-        "src/js/api.js",
-        "src/js/script.js",
-        "src/js/localStorage.js",
-        "src/js/generalFunctions.js",
-        "src/js/renderFunctions.js",
-        "src/js/pagination.js",
-        "src/js/categories.js",
-        "src/js/orderBy.js",
-        "src/js/favorites.js",
-        "src/js/search.js"
+        "js/api.js",
+        "js/script.js",
+        "js/localStorage.js",
+        "js/generalFunctions.js",
+        "js/renderFunctions.js",
+        "js/pagination.js",
+        "js/categories.js",
+        "js/orderBy.js",
+        "js/favorites.js",
+        "js/search.js"
     ])
     .pipe(concat("main.js"))
-    .pipe(gulp.dest("src/"));
+    .pipe(gulp.dest("./"));
 }
 
 function watch(){
-    gulp.watch("src/scss/**/*.scss", compileSass);
-    //gulp.watch("src/js/**/*.js", compileJS);
+    gulp.watch("scss/**/*.scss", compileSass);
+    //gulp.watch("js/**/*.js", compileJS);
 }

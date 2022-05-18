@@ -347,10 +347,18 @@ body:before {
 
 .categories-wrapper {
   background: linear-gradient(0deg, black 0%, #181818 100%);
-  display: none;
+  max-height: 0;
+  transition: max-height 0.5s ease;
 }
 .categories-wrapper.show-list {
-  display: block;
+  max-height: 100px;
+}
+.categories-wrapper.show-list .categories-list-2 {
+  opacity: 1;
+}
+.categories-wrapper .categories-list-2 {
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
 .header__favorites > a {
