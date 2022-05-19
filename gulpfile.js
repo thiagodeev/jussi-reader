@@ -4,11 +4,13 @@ const gulp = require("gulp");
 const sass = require("gulp-sass")(require("sass"));
 const concat = require('gulp-concat');
 const cleanCSS = require('gulp-clean-css');
+const minify = require('gulp-minify');
 
 gulp.task("default", watch);
 gulp.task("sass", compileSass);
 gulp.task("js", compileJS);
-gulp.task("css", minifyCSS);
+gulp.task("css-compress", compressCSS);
+gulp.task("js-compress", compressJS);
 
 function compileSass(){
     return gulp
@@ -35,15 +37,22 @@ function compileJS(){
     .pipe(gulp.dest("./"));
 }
 
-function minifyCSS(){
+function compressCSS(){
     return gulp
     .src('scss/main.css')
     .pipe(cleanCSS({compatibility: 'ie8'}))
     .pipe(gulp.dest('./'));
 };
 
+function compressJS(){
+    return gulp
+    .src(['js/main.js'])
+    .pipe(minify({noSource: true}))
+    .pipe(gulp.dest('./'))
+};
+
 function watch(){
     gulp.watch("scss/**/*.scss", compileSass);
     gulp.watch("js/**/*.js", compileJS);
-    gulp.watch("scss/main.css", minifyCSS);
+    gulp.watch("scss/main.css", compressCSS);
 }
