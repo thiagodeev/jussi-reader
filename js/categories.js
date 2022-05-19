@@ -1,5 +1,4 @@
 function createsCategoriesObject(listOfNews){
-
   let categoriesObject = {
     "Sem Categoria": []
   };
@@ -23,7 +22,7 @@ function createsCategoriesObject(listOfNews){
       });
     }
   })
-  // console.log(categoriesObject)
+
   return categoriesObject;
 }
 
@@ -48,11 +47,8 @@ function renderCategorieList(categoriesObject){
     categorieItem.classList.add("flex-item");
     categorieItem.append(categorieItemAnchor);
 
-
     categorieItem.addEventListener("click", element => {
       if(!element.currentTarget.classList.contains("active")){
-        // console.log(categorieElements)
-
         removeActiveClassFromCategoriesItems();
         removeActiveClassFromFavoriteMenu();
         

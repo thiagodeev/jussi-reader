@@ -32,6 +32,8 @@ function addNewAPI(){
   
   button.addEventListener("click", async element => {
     element.preventDefault();
+    //start loading animation
+    loadingAnimation();
     
     APILink = input.value;
     newsURLs.push(APILink);
@@ -40,11 +42,16 @@ function addNewAPI(){
     //update the offline news list
     localStorage.setItem('newsFromAPI', JSON.stringify(newsFromAPI));
     main();
+
+    //stop loading animation
+    loadingAnimation()
+
     //clean input
     input.value = "";
   }, {once : true});
 };
 loadingAnimation = function loadingAnimation(){
+  document.body.classList.toggle("loading-overflow");
   document.getElementById("body-wrapper").classList.toggle("visibility-off");
   document.getElementById("loading").classList.toggle("visibility-on");
 };
@@ -86,44 +93,10 @@ async function main (){
 };
 main();
 
-//just executes when DOM is loaded
-document.addEventListener("DOMContentLoaded", function(event) {
-});
-
-
-
 
 window.addEventListener('load', (event) => {
   loadingAnimation()
 });
-
-
-
-
-
-
-
-// for( let i = 0; i < 2000000000; i++)
-// {}
-
-
-// window.addEventListener('load', (event) => {
-//   for( let i = 0; i < 2000000000; i++)
-// {}
-//   console.log("load");
-// });
-
-// document.addEventListener('readystatechange', (event) => {
-//   console.log("readystate" + document.readyState);
-//   for( let i = 0; i < 2000000000; i++)
-// {}
-//   console.log("readystate" + document.readyState);
-// });
-
-// document.addEventListener('DOMContentLoaded', (event) => {
-//   console.log("DOMContentLoaded");
-// });
-
 async function getAPINews(){
   let newsOffline = JSON.parse(localStorage.getItem('newsFromAPI'));
 
@@ -286,7 +259,6 @@ function newsTemplate(newsList){
   element = document.createElement("div");
   element.classList.add("newsList__news");
   element.innerHTML = `
-    
     <img class="newsList__news__image" src="${newsList.image}" onerror="this.onerror=null; this.src='assets/image-placeholder.jpg'" alt="">
     <h2 class="newsList__news__title">${newsList.title}</h2>
     <p class="newsList__news__date_published">${date.toLocaleDateString("pt-BR", options)}</p>
@@ -361,7 +333,6 @@ function createsHTMLNewsFrom(listToConvert){
     paginationElement.firstChild.classList.add("active")
   }
 function createsCategoriesObject(listOfNews){
-
   let categoriesObject = {
     "Sem Categoria": []
   };
@@ -385,7 +356,7 @@ function createsCategoriesObject(listOfNews){
       });
     }
   })
-  // console.log(categoriesObject)
+
   return categoriesObject;
 }
 
@@ -410,11 +381,8 @@ function renderCategorieList(categoriesObject){
     categorieItem.classList.add("flex-item");
     categorieItem.append(categorieItemAnchor);
 
-
     categorieItem.addEventListener("click", element => {
       if(!element.currentTarget.classList.contains("active")){
-        // console.log(categorieElements)
-
         removeActiveClassFromCategoriesItems();
         removeActiveClassFromFavoriteMenu();
         
@@ -612,10 +580,8 @@ function offlineFavoritesFeature(allNewsInHTMLFormat){
 
       if(element.currentTarget.classList.contains("favorite")){
         indexesOfFavoritesNews.push(newsIndex);
-        console.log(indexesOfFavoritesNews);
       } else {
         indexesOfFavoritesNews.splice(indexesOfFavoritesNews.indexOf(newsIndex), 1);
-        console.log(indexesOfFavoritesNews);
       }
 
       localStorage.setItem('indexesOfFavoritesNews', JSON.stringify(indexesOfFavoritesNews));

@@ -1,6 +1,9 @@
-@use "../Settings" as *;
-@use "../Tools" as *;
+@use "../foward" as *;
 
+
+body.loading-overflow {
+  overflow: hidden;
+}
 
 .body-wrapper, .loading {
   opacity: 1;
@@ -8,7 +11,6 @@
 }
 
 .body-wrapper.visibility-off {
-  visibility: hidden;
   opacity: 0;
 }
 .loading.visibility-on {

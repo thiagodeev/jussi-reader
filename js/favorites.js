@@ -52,10 +52,8 @@ function offlineFavoritesFeature(allNewsInHTMLFormat){
 
       if(element.currentTarget.classList.contains("favorite")){
         indexesOfFavoritesNews.push(newsIndex);
-        console.log(indexesOfFavoritesNews);
       } else {
         indexesOfFavoritesNews.splice(indexesOfFavoritesNews.indexOf(newsIndex), 1);
-        console.log(indexesOfFavoritesNews);
       }
 
       localStorage.setItem('indexesOfFavoritesNews', JSON.stringify(indexesOfFavoritesNews));

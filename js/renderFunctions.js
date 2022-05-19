@@ -112,7 +112,6 @@ function newsTemplate(newsList){
   element = document.createElement("div");
   element.classList.add("newsList__news");
   element.innerHTML = `
-    
     <img class="newsList__news__image" src="${newsList.image}" onerror="this.onerror=null; this.src='assets/image-placeholder.jpg'" alt="">
     <h2 class="newsList__news__title">${newsList.title}</h2>
     <p class="newsList__news__date_published">${date.toLocaleDateString("pt-BR", options)}</p>

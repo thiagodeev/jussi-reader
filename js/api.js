@@ -32,6 +32,8 @@ function addNewAPI(){
   
   button.addEventListener("click", async element => {
     element.preventDefault();
+    //start loading animation
+    loadingAnimation();
     
     APILink = input.value;
     newsURLs.push(APILink);
@@ -40,6 +42,10 @@ function addNewAPI(){
     //update the offline news list
     localStorage.setItem('newsFromAPI', JSON.stringify(newsFromAPI));
     main();
+
+    //stop loading animation
+    loadingAnimation()
+
     //clean input
     input.value = "";
   }, {once : true});

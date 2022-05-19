@@ -1,4 +1,5 @@
 loadingAnimation = function loadingAnimation(){
+  document.body.classList.toggle("loading-overflow");
   document.getElementById("body-wrapper").classList.toggle("visibility-off");
   document.getElementById("loading").classList.toggle("visibility-on");
 };
@@ -40,40 +41,7 @@ async function main (){
 };
 main();
 
-//just executes when DOM is loaded
-document.addEventListener("DOMContentLoaded", function(event) {
-});
-
-
-
 
 window.addEventListener('load', (event) => {
   loadingAnimation()
 });
-
-
-
-
-
-
-
-// for( let i = 0; i < 2000000000; i++)
-// {}
-
-
-// window.addEventListener('load', (event) => {
-//   for( let i = 0; i < 2000000000; i++)
-// {}
-//   console.log("load");
-// });
-
-// document.addEventListener('readystatechange', (event) => {
-//   console.log("readystate" + document.readyState);
-//   for( let i = 0; i < 2000000000; i++)
-// {}
-//   console.log("readystate" + document.readyState);
-// });
-
-// document.addEventListener('DOMContentLoaded', (event) => {
-//   console.log("DOMContentLoaded");
-// });
