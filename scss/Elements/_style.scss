@@ -45,7 +45,7 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  min-height: 98%;
+  min-height: 95%;
   @include font($main-font, 400);
   color: $primary-text-color;
   padding: 0.5em 1em;

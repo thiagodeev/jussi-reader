@@ -232,7 +232,7 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  min-height: 98%;
+  min-height: 95%;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   color: #FFF;
@@ -305,7 +305,7 @@ body.loading-overflow {
 }
 
 .loading.visibility-on {
-  visibility: visible;
+  display: grid;
   opacity: 1;
 }
 
@@ -316,10 +316,9 @@ body.loading-overflow {
   top: 0;
   left: 0;
   z-index: 2;
-  display: grid;
   align-items: center;
   justify-items: center;
-  visibility: hidden;
+  display: none;
 }
 .loading:after {
   content: "";
