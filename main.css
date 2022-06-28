@@ -476,6 +476,11 @@ body.loading-overflow {
   display: flex;
   justify-content: space-around;
 }
+@media (min-width: 1600px) {
+  .error-container {
+    grid-column: span 3;
+  }
+}
 .error-container .error-message {
   padding-top: 10vh;
   font-size: 2.5em;

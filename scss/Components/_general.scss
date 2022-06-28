@@ -1,9 +1,15 @@
+@use "../foward" as *;
+
 //error messagem when empty search or empty favorite items
 .error-container{
   position: relative;
   grid-column: span 2;
   display: flex;
   justify-content: space-around;
+
+  @include breakpoint(x-large, min){
+    grid-column: span 3;
+  }
 
   .error-message{
     padding-top: 10vh;
