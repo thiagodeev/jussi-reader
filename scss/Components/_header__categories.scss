@@ -61,11 +61,22 @@
   
     .categories-list-2 {
       opacity: 1;
+      max-height: 100px;
+
+      a {
+        font-size: inherit;
+      }
     }
   }
 
   .categories-list-2 {
+    transition: opacity 0.5s ease, max-height 0.5s ease;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    max-height: 0;
+
+    a {
+      transition: font-size 0s ease 0.1s;
+      font-size: 0;
+    }
   }
 }

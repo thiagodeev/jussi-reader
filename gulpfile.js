@@ -5,6 +5,7 @@ const sass = require("gulp-sass")(require("sass"));
 const concat = require('gulp-concat');
 const cleanCSS = require('gulp-clean-css');
 const minify = require('gulp-minify');
+const rename = require('gulp-rename');
 
 gulp.task("default", watch);
 gulp.task("sass", compileSass);
@@ -16,7 +17,7 @@ function compileSass(){
     return gulp
     .src("scss/**/main.scss")
     .pipe(sass())
-    .pipe(gulp.dest("scss/"));
+    .pipe(gulp.dest("./"));
 };
 
 function compileJS(){
@@ -39,20 +40,23 @@ function compileJS(){
 
 function compressCSS(){
     return gulp
-    .src('scss/main.css')
+    .src('./main.css')
     .pipe(cleanCSS({compatibility: 'ie8'}))
+    .pipe(rename('main-min.css'))
     .pipe(gulp.dest('./'));
 };
 
 function compressJS(){
     return gulp
-    .src(['js/main.js'])
+    .src('./main.js')
     .pipe(minify({noSource: true}))
+    .pipe(rename('main-min.js'))
     .pipe(gulp.dest('./'))
 };
 
 function watch(){
     gulp.watch("scss/**/*.scss", compileSass);
     gulp.watch("js/**/*.js", compileJS);
-    gulp.watch("scss/main.css", compressCSS);
+    gulp.watch("./main.css", compressCSS);
+    gulp.watch("./main.js", compressJS);
 }
